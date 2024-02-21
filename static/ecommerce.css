@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #263535;
+}
+.offcanvas-body {
+    background-color: #263535;
+}
+.container {
+    margin-top: 60px;
+}
+
+footer {
+    background-color: #efe4ef;
+}
