@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}Sign In{% endblock %}
+{% block head %}
+    <link href="/static/register.css" rel="stylesheet">
+{% endblock %}
+{% block main %}
+<div class="registration-container">
+    <h2>Gym Registration</h2>
+    <form class="row g-3">
+        <hr class="featurette-divider">
+        <div class="input-group">
+            <span class="input-group-text">Name</span>
+            <input name="fullname" type="text" aria-label="First name" class="form-control">
+          </div>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input name="username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+          </div>
+          <label for="ageInput">Enter Your Age:</label>
+          <input name="age" type="number" id="ageInput" placeholder="e.g., 25" min="1" required>
+          <label for="ageInput">Enter Your Height:</label>
+          <input name="height" type="number" id="ageInput" placeholder="e.g., 5.5ft" min="1" required>
+          <label for="ageInput">Enter Your Weight:</label>
+          <input name="weight" type="number" id="ageInput" placeholder="e.g., 60kg" min="1" required>
+        <div class="col-md-6">
+          <label for="inputEmail4" class="form-label">Email</label>
+          <input name="email" type="email" class="form-control" id="inputEmail4">
+        </div>
+        <div class="col-md-6">
+          <label for="inputPassword4" class="form-label">Password</label>
+          <input name="passowrd" type="password" class="form-control" id="inputPassword4">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input  type="tel" id="phone" name="phone" required>
+        </div>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Address</label>
+          <input name="address" type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        </div>
+        <div class="col-12">
+          <label for="inputAddress2" class="form-label">landmark</label>
+          <input name="landmark" type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+        </div>
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">City</label>
+          <input name="city" type="text" class="form-control" id="inputCity">
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">State</label>
+          <select name="state" id="inputState" class="form-select">
+            <option selected>Choose...</option>
+            <option value="odisha">Odisha</option>
+            <option value="Bihar">Bihar</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Zip</label>
+          <input name="zipcode" type="text" class="form-control" id="inputZip">
+        </div>
+        <select name="membership" class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            <option value="free">Free</option>
+            <option value="paid">Premimum</option>
+          </select>
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="gridCheck" required>
+            <label class="form-check-label" for="gridCheck">
+              Terms & Condition
+            </label>
+          </div>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Sign in</button>
+        </div>
+      </form>
+</div>
+{% endblock %}
