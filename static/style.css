@@ -22,3 +22,61 @@ main {
 footer {
     background-color: #efe4ef;
 }
+
+/* Offcanvas Menu Styles */
+.offcanvas {
+    background-color: #343a40; /* Dark background for offcanvas */
+    color: #fff; /* White text color */
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid #555; /* Add a border to separate header from body */
+}
+
+.offcanvas-title {
+    color: #fff; /* White text for the title */
+}
+
+.offcanvas-body {
+    background-color: #343a40; /* Dark background for the body */
+    color: #fff; /* White text color */
+}
+
+.navbar-nav .nav-link {
+    color: #fff; /* White text for nav links */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ccc; /* Light gray text on hover */
+}
+
+.dropdown-menu {
+    background-color: #343a40; /* Dark background for dropdown */
+    border: 1px solid #555; /* Add a border to the dropdown */
+}
+
+.dropdown-item {
+    color: #fff; /* White text for dropdown items */
+}
+
+.dropdown-item:hover {
+    background-color: #555; /* Darker background on hover */
+    color: #fff; /* White text on hover */
+}
+
+/* Search Form Styles */
+.form-control {
+    background-color: #555; /* Dark background for search input */
+    color: #fff; /* White text for search input */
+    border: 1px solid #777; /* Add a border to the search input */
+}
+
+.btn-success {
+    background-color: #28a745; /* Green background for search button */
+    border: 1px solid #28a745; /* Add a border to the search button */
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Darker green on hover */
+    border: 1px solid #218838; /* Darker border on hover */
+}

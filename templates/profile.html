@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block head %}
+    <link href="/static/profile.css" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title">User Profile</h1>
+
+                {% if user_data %}
+                    <h2>Welcome, {{ user_data.username }}</h2>
+                    <p class="card-text">Full Name: {{ user_data.full_name }}</p>
+                    <p class="card-text">Email: {{ user_data.email }}</p>
+                    <p class="card-text">Address: {{ user_data.address }}, {{ user_data.landmark }}, {{ user_data.city }}, {{ user_data.state }}, {{ user_data.zip }}</p>
+                    <p class="card-text">Phone Number: {{ user_data.phone_number }}</p>
+                    <p class="card-text">
+                        Membership Status:
+                        {% if user_data.is_premium %}
+                            <span class="badge bg-warning">Premium</span>
+                        {% else %}
+                            <span class="badge bg-success">Free</span>
+                        {% endif %}
+                    </p>
+                {% else %}
+                    <p>No user data found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Health Information -->
+    <div class="container mt-4">
+        <h2>Health Information</h2>
+        {% if health %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Metric</th>
+                        <th scope="col">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">BMI (Body Mass Index)</th>
+                        <td>{{ health.bmi }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">BMR (Basal Metabolic Rate)</th>
+                        <td>{{ health.bmr }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Calories Needed to Gain Daily</th>
+                        <td>{{ health.daily_calories_needed }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Calories to Burn Daily</th>
+                        <td>{{ health.calories_to_lose }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        {% else %}
+            <p>No health data found.</p>
+        {% endif %}
+    </div>
+
+    <!-- Cart Items -->
+    <div class="container mt-4">
+        <h2>Your Cart</h2>
+        {% if cart_items %}
+            <ul class="list-group">
+                {% for item in cart_items %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ item.product_title }}
+                        <span class="badge bg-primary rounded-pill">${{ item.product_price }}</span>
+                        <button type="button" class="btn btn-success btn-sm ms-2" onclick="buyNow('{{ item.product_title }}')">Buy Now</button>
+                    </li>
+                {% endfor %}
+            </ul>
+            <button type="button" class="btn btn-primary mt-3" onclick="checkout()">Checkout</button>
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+
+    <!-- Purchase History -->
+    <div class="container mt-4">
+        <h2>Purchase History</h2>
+        {% if purchase_history %}
+            <table class="table table-purchase">
+                <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Product Title</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for purchase in purchase_history %}
+                        <tr>
+                            <td>{{ purchase.purchase_date }}</td>
+                            <td>{{ purchase.product_title }}</td>
+                            <td>{{ purchase.product_price }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No purchase history found.</p>
+        {% endif %}
+    </div>
+{% endblock %}
