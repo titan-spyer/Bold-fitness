@@ -224,6 +224,12 @@ def profile():
     conn.close()
 
     return render_template("profile.html", user_data=user_data_f[0], health=health_records[0], cart_items=cart_items, purchase_history=purchase_histories)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return render_template("logout.html")
+
 @app.after_request
 def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
