@@ -7,6 +7,7 @@ from flask_session import Session
 
 # Configure application
 app = Flask(__name__, static_folder='static')
+app = Flask(__name__, template_folder='templates')
 
 # Configure session to use filesystem (instead of signed cookies)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -227,6 +228,7 @@ def profile():
 
 @app.route('/logout')
 def logout():
+    print("Logout route called")
     session.clear()
     return render_template("logout.html")
 
