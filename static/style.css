@@ -80,3 +80,109 @@ footer {
     background-color: #218838; /* Darker green on hover */
     border: 1px solid #218838; /* Darker border on hover */
 }
+
+/* Card Container */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Card Styles */
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 40px); /* Adjust for 3 cards per row */
+    margin: 10px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Horizontal Card */
+/* Horizontal Card */
+.card.horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch; /* Ensure the image and content stretch to the same height */
+    border-radius: 0; /* Remove rounded corners */
+}
+
+.card.horizontal .card-image {
+    flex: 1;
+    max-width: 50%; /* Adjust as needed */
+    overflow: hidden; /* Ensure the image doesn't overflow */
+}
+
+.card.horizontal .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the entire box */
+    border-radius: 0; /* Remove rounded corners */
+}
+
+.card.horizontal .card-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+}
+
+/* Vertical Card */
+.card.vertical {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0; /* Remove rounded corners */
+}
+
+.card.vertical .card-image {
+    width: 100%;
+    height: 200px; /* Adjust as needed */
+    overflow: hidden; /* Ensure the image doesn't overflow */
+}
+
+.card.vertical .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the entire box */
+    border-radius: 0; /* Remove rounded corners */
+}
+
+.card.vertical .card-content {
+    padding: 20px;
+}
+
+/* Card Image */
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Card Content */
+.card-content {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.card-description {
+    font-size: 1rem;
+    color: #555;
+}
+
+.card-updated-time {
+    font-size: 0.875rem;
+    color: #888;
+    margin-top: 10px;
+}

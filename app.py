@@ -32,17 +32,28 @@ def get_db_connection():
 
 # Password hashing
 def generate_password_hash(password):
-    salt = secrets.token_hex(16)
-    return hashlib.sha256((password + salt).encode()).hexdigest()
+    salt = secrets.token_hex(16)  
+    hashed_password = hashlib.sha256((password + salt).encode()).hexdigest()
+    return salt, hashed_password  
 
-def check_password_hash(hashed_password, password):
-    salt = hashed_password[:32]
-    return hashed_password == hashlib.sha256((password + salt).encode()).hexdigest()
+def check_password_hash(salt, hashed_password, password):
+    # Hash the input password with the provided salt
+    new_hash = hashlib.sha256((password + salt).encode()).hexdigest()
+    return new_hash == hashed_password  
 
+@app.route('/api/cards')
+def get_cards():
+    conn = get_db_connection()
+    cards = conn.execute("SELECT * FROM cards").fetchall()
+    conn.close()
+    return jsonify([dict(card) for card in cards])  # Convert rows to dictionaries
 # Routes
 @app.route('/')
 def index():
-    return render_template("index.html")
+    conn = get_db_connection()
+    cards = conn.execute("SELECT * FROM cards").fetchall()  
+    conn.close()
+    return render_template("index.html", cards=cards)  
 
 @app.route('/ecommerce', methods=["GET", "POST"])
 def ecommerce():
@@ -72,26 +83,40 @@ def ecommerce():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    session.clear()
+    session.clear()  # Clear any existing session
+
     if request.method == "POST":
         username = request.form.get("username")
         passw = request.form.get("password")
+
+        # Check if username or password is missing
         if not username or not passw:
-            flash("Enter the complete details")
+            flash("Please enter both username and password.")
+            return render_template("login.html")
+
+        conn = get_db_connection()
+        rows = conn.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall()
+        conn.close()
+
+        # Check if the username exists
+        if len(rows) != 1:
+            flash("Username not found.")
+            return render_template("login.html")
+
+        # Retrieve the salt and hashed password from the database
+        salt = rows[0]["salt"]
+        hashed_password = rows[0]["password"]
+
+        # Verify the password
+        if check_password_hash(salt, hashed_password, passw):
+            session["user_id"] = rows[0]["id"]  # Set the session
+            return redirect("/")  # Redirect to the home page after successful login
         else:
-            conn = get_db_connection()
-            rows = conn.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall()
-            conn.close()
-            if len(rows) != 1:
-                flash("Not a Correct username")
-            else:
-                hashed_password = rows[0]["password"]
-                password_match = check_password_hash(hashed_password, passw)
-                if password_match:
-                    session["user_id"] = rows[0]["id"]
-                    return redirect("/")
-    else:
-        return render_template("login.html")
+            flash("Incorrect password.")
+            return render_template("login.html")
+
+    # Handle GET requests
+    return render_template("login.html")
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
@@ -106,7 +131,7 @@ def register():
         weight = int(request.form.get("weight"))
         mail = request.form.get("email")
         passw = request.form.get("ypassword")
-        passworde = generate_password_hash(passw)
+        salt, passworde = generate_password_hash(passw)
         number = request.form.get("phone")
         address = request.form.get("address")
         landmark = request.form.get("landmark")
@@ -151,11 +176,11 @@ def register():
 
         # Insert user into the database
         if member == "free":
-            conn.execute("INSERT INTO users (username, full_name, password, email, address, landmark, city, state, zip, phone_number, is_premium) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                       (username, name, passworde, mail, address, landmark, city, state, zip, number, False))
+            conn.execute("INSERT INTO users (username, full_name, password, salt, email, address, landmark, city, state, zip, phone_number, is_premium) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                       (username, name, passworde, salt, mail, address, landmark, city, state, zip, number, False))
         else:
-            conn.execute("INSERT INTO users (username, full_name, password, email, address, landmark, city, state, zip, phone_number, is_premium) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                       (username, name, passworde, mail, address, landmark, city, state, zip, number, True))
+            conn.execute("INSERT INTO users (username, full_name, password, salt, email, address, landmark, city, state, zip, phone_number, is_premium) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                       (username, name, passworde, salt, mail, address, landmark, city, state, zip, number, True))
 
         # Get the newly created user's ID
         user_m_id = conn.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchall()
@@ -231,6 +256,29 @@ def logout():
     print("Logout route called")
     session.clear()
     return render_template("logout.html")
+
+@app.route('/add_card', methods=["GET", "POST"])
+def add_card():
+    if request.method == "POST":
+        # Get form data
+        card_title = request.form.get("card_title")
+        card_description = request.form.get("card_description")
+        card_image_url = request.form.get("card_image_url")
+        card_type = request.form.get("card_type")  
+        card_updated_time = request.form.get("card_updated_time")
+
+        # Insert the card into the database
+        conn = get_db_connection()
+        conn.execute("INSERT INTO cards (title, description, image_url, type, updated_time) VALUES (?, ?, ?, ?, ?)",
+                     (card_title, card_description, card_image_url, card_type, card_updated_time))
+        conn.commit()
+        conn.close()
+
+        flash("Card added successfully!")
+        return redirect("/add_card")
+
+    # Handle GET requests
+    return render_template("add_card.html")
 
 @app.after_request
 def after_request(response):

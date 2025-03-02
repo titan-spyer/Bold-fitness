@@ -3,6 +3,41 @@
 {% block title %}Index{% endblock %}
 {% block head %}
 <link href="/static/style.css" rel="stylesheet">
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const cardContainer = document.querySelector(".card-container");
+  
+      // Function to fetch and display cards
+      function fetchCards() {
+          fetch("/api/cards")
+              .then(response => response.json())
+              .then(cards => {
+                  cardContainer.innerHTML = ""; // Clear existing cards
+                  cards.forEach(card => {
+                      const cardElement = document.createElement("div");
+                      cardElement.classList.add("card", card.type);
+  
+                      cardElement.innerHTML = `
+                          <div class="card-image">
+                              <img src="${card.image_url}" alt="${card.title}">
+                          </div>
+                          <div class="card-content">
+                              <h3 class="card-title">${card.title}</h3>
+                              <p class="card-description">${card.description}</p>
+                              <p class="card-updated-time">Updated: ${card.updated_time}</p>
+                          </div>
+                      `;
+  
+                      cardContainer.appendChild(cardElement);
+                  });
+              })
+              .catch(error => console.error("Error fetching cards:", error));
+      }
+  
+      // Fetch cards on page load
+      fetchCards();
+  });
+  </script>
 {% endblock %}
 
 {% block main %}
@@ -46,7 +81,21 @@
         </button>
     </div>
   </div>
-  <hr class="featurette-divider">
+  <div class="card-container">
+    {% for card in cards %}
+    <div class="card {{ card['type'] }}">
+        <div class="card-image">
+            <img src="{{ card['image_url'] }}" alt="{{ card['title'] }}">
+        </div>
+        <div class="card-content">
+            <h3 class="card-title">{{ card['title'] }}</h3>
+            <p class="card-description">{{ card['description'] }}</p>
+            <p class="card-updated-time">Updated: {{ card['updated_time'] }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+  <!-- <hr class="featurette-divider">
     <div class="container marketing">
 
       <div class="card-group">
@@ -119,6 +168,6 @@
           </div>
         </div>
       </div>
-      <hr class="border border-primary border-3 opacity-75 fluid">
+      <hr class="border border-primary border-3 opacity-75 fluid"> -->
 
 {% endblock %}

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}Add Card{% endblock %}
+
+{% block main %}
+<div class="container">
+    <h1>Add a New Card</h1>
+    <form method="POST" action="/add_card">
+        <div class="mb-3">
+            <label for="card_title" class="form-label">Card Title</label>
+            <input type="text" class="form-control" id="card_title" name="card_title" required>
+        </div>
+        <div class="mb-3">
+            <label for="card_description" class="form-label">Card Description</label>
+            <textarea class="form-control" id="card_description" name="card_description" rows="3" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="card_image_url" class="form-label">Card Image URL</label>
+            <input type="url" class="form-control" id="card_image_url" name="card_image_url">
+        </div>
+        <div class="mb-3">
+            <label for="card_type" class="form-label">Card Type</label>
+            <select class="form-select" id="card_type" name="card_type" required>
+                <option value="horizontal">Horizontal</option>
+                <option value="vertical">Vertical</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="card_updated_time" class="form-label">Updated Time</label>
+            <input type="text" class="form-control" id="card_updated_time" name="card_updated_time" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Card</button>
+    </form>
+</div>
+{% endblock %}
