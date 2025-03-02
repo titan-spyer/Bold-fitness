@@ -63,3 +63,83 @@ body {
     cursor: pointer;
 }
 
+/* Offcanvas Menu Styles */
+.offcanvas {
+    background-color: #343a40 !important; /* Dark background for offcanvas */
+    color: #fff !important; /* White text color */
+}
+
+.offcanvas-header {
+    border-bottom: 1px solid #555 !important; /* Add a border to separate header from body */
+}
+
+.offcanvas-title {
+    color: #fff !important; /* White text for the title */
+}
+
+.offcanvas-body {
+    background-color: #343a40 !important; /* Dark background for the body */
+    color: #fff !important; /* White text color */
+}
+
+.navbar-nav .nav-link {
+    color: #fff !important; /* White text for nav links */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ccc !important; /* Light gray text on hover */
+}
+
+.dropdown-menu {
+    background-color: #343a40 !important; /* Dark background for dropdown */
+    border: 1px solid #555 !important; /* Add a border to the dropdown */
+}
+
+.dropdown-item {
+    color: #fff !important; /* White text for dropdown items */
+}
+
+.dropdown-item:hover {
+    background-color: #555 !important; /* Darker background on hover */
+    color: #fff !important; /* White text on hover */
+}
+
+/* Search Form Styles */
+.form-control {
+    background-color: #555 !important; /* Dark background for search input */
+    color: #fff !important; /* White text for search input */
+    border: 1px solid #777 !important; /* Add a border to the search input */
+}
+
+.btn-success {
+    background-color: #28a745 !important; /* Green background for search button */
+    border: 1px solid #28a745 !important; /* Add a border to the search button */
+}
+
+.btn-success:hover {
+    background-color: #218838 !important; /* Darker green on hover */
+    border: 1px solid #218838 !important; /* Darker border on hover */
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-title {
+        font-size: 1.5rem;
+    }
+
+    .card-text {
+        font-size: 0.9rem;
+    }
+
+    .table th, .table td {
+        padding: 8px;
+    }
+
+    .list-group-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .list-group-item .badge {
+        margin-top: 10px;
+    }
+}
